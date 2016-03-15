@@ -22,9 +22,15 @@ namespace TestExtractor.Extractors.NUnit.Structure
         /// </summary>
         public NodeName (ITest tNode)
         {
-            FullName = tNode.TestName.FullName;
-            Name = tNode.TestName.Name;
-            UniqueName = tNode.TestName.UniqueName;
+            FullName = ReplaceQuotes(tNode.TestName.FullName);
+            Name = ReplaceQuotes(tNode.TestName.Name);
+            UniqueName = ReplaceQuotes(tNode.TestName.UniqueName);
+        }
+
+        private static string ReplaceQuotes (string input)
+        {
+            // this is necessary for test cases which contains a string as a parameter
+            return input.Replace("\"", "\\\"");
         }
     }
 }
